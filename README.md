@@ -1,3 +1,3 @@
 # springboot-captcha
 
-In this repository, we are implementing our own captcha using servlet
+In this repository, we are implementing captcha. (rest repostories
