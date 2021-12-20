@@ -1,10 +1,12 @@
 package com.works.captchaimplemention.utils.security;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.works.captchaimplemention.utils.security.base.JwtUtil;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +24,14 @@ public class JwtUtilImplemention implements JwtUtil {
 
 
     @Override
+    public String generateToken(Authentication authentication) throws JsonProcessingException {
+        com.works.captchaimplemention.model.dto.LoggedUserModel user = (com.works.captchaimplemention.model.dto.LoggedUserModel) authentication.getPrincipal();
+        return generateToken(user);
+    }
+
+    @Override
     public String createToken(UUID token) {
-        return generateToken(token);
+        return null;
     }
 
     @Override
@@ -36,9 +44,9 @@ public class JwtUtilImplemention implements JwtUtil {
         return null;
     }
 
-    private String generateToken(UUID subject){
+    private String generateToken(com.works.captchaimplemention.model.dto.LoggedUserModel logged){
         return JWT.create()
-                .withSubject(subject.toString())
+                .withSubject(logged.toString())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JWT_TOKEN_DURATION))
                 .sign(algorithm);
     }

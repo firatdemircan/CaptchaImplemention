@@ -9,4 +9,6 @@ public class CaptchDTO {
 
     UUID uid;
     String captchaKey;
+    String userName;
+    String password;
 }
