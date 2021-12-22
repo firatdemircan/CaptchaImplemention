@@ -32,7 +32,6 @@ public class AuthProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
-        //firma girişimi tmo girişimi... burdaki temel fark firmalar tc veya vergino ile giriş yapacak
         LoggedUserModel loggedUserModel;
 
             Usertmo usertmo;

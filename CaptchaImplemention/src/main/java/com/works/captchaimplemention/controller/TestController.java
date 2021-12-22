@@ -6,7 +6,6 @@ import com.works.captchaimplemention.model.dto.CaptchDTO;
 import com.works.captchaimplemention.service.CaptchaService;
 import com.works.captchaimplemention.utils.security.base.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,7 +22,7 @@ public class TestController {
 
 
 
-    @GetMapping("/captcha")
+    @PostMapping("/captcha")
     public Object GenerateCaptcha(){
 
         Captcha captchaModel =captchaService.generateCaptcha();
@@ -35,8 +34,6 @@ public class TestController {
     public Boolean CheckCaptcha(@RequestBody CaptchDTO captchDTO) throws JsonProcessingException {
 
 
-        int x = 5;
-
         if(captchaService.validateCaptcha(captchDTO)){
             //giriş yapmaya çalış
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(captchDTO.getUserName(), captchDTO.getPassword()));
@@ -44,7 +41,8 @@ public class TestController {
             System.out.println(token);
         }
         else{
-            //captcha yanlış yeni capthca gönder
+            Captcha captchaModel =captchaService.generateCaptcha();
+            return false;
         }
 
         return captchaService.validateCaptcha(captchDTO);
